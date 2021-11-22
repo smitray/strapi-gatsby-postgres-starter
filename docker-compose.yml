@@ -1,10 +1,23 @@
 version: '3'
 
 services:
+  web:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    environment:
+      STRAPI_URI: strapi
+    volumes:
+      - ./frontend:/app
+    ports:
+      - '8000:8000'
+    depends_on:
+      - strapi
+
   strapi:
     build:
       context: ./backend
-      dockerfile: ./Dockerfile   
+      dockerfile: ./Dockerfile
     environment:
       DATABASE_CLIENT: postgres
       DATABASE_NAME: ${DATABASE_NAME}
